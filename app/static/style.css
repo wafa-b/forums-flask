@@ -1,0 +1,61 @@
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 100%;padding-top: 70px}
+
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+
+      .row.content {height:auto;}
+    }
+ table, thead,th{
+    text-align:left;
+    font-size: 16px;
+}
+tbody,td {
+    padding: 15px;
+    font-size: 16px;
+    text-align: left;
+}
+ table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.col-sm-6 {
+  padding-top: 10px
+}
+.a {
+background-color: white;
+border: none;
+}
+.success {background-color: #4CAF50; border: none;color: white;padding: 14px 28px;
+    font-size: 16px;cursor: pointer;} /* Green */
+.success:hover {background-color: #46a049; border: none;color: white;padding: 14px 28px;
+    font-size: 16px;cursor: pointer;}
+.warning {background-color: #ff9800; border: none;color: white;padding: 14px 28px;
+    font-size: 16px;cursor: pointer;} /* Orange */
+.warning:hover {background: #e68a00; border: none;color: white;padding: 14px 28px;
+    font-size: 16px;cursor: pointer;}
+.danger {background-color: #f44336; border: none;color: white;padding: 14px 28px;
+    font-size: 16px;cursor: pointer;} /* Red */
+.danger:hover {background: #da190b; border: none;color: white;padding: 14px 28px;
+    font-size: 16px;cursor: pointer;}
+.default {background-color: #e7e7e7; color: black; border: none;color: black;
+    padding: 14px 28px;font-size: 16px;cursor: pointer;} /* Gray */
+.default:hover {background: #ddd; border: none;color: black;padding: 14px 28px;
+    font-size: 16px;cursor: pointer;}
+   background-color: #555;
+      color: white;
+      padding: 15px;
+    }
