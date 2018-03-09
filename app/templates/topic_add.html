@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Forums Workshop</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Forums Workshop</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">AboutUs</a></li>
+        <li><a href="#">Contact</a></li>
+
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+            <form class="navbar-form navbar-left">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Member Search" name="search">
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </div>
+      </div>
+
+    </form>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid text-center">
+  <div class="row content">
+
+
+   <div class="col-sm-12">
+
+   <div class="well a">
+     <div class="row ">
+      <a href="#"><button class="tablinkbtn warning">My Tpoics</button></a>
+      <a href="#"><button class="tablinkbtn warning">My Profile</button></a>
+      <a href="#"><button class="tablinkbtn warning">Members</button></a>
+      <a href="#"><button class="tablinkbtn warning">Top 10 Members</button></a>
+     </div>
+
+     </div>
+   </div>
+
+
+<div class="container">
+      <div class="col-sm-6 text-left">
+      <h1>Create New Topic</h1>
+    </div>
+
+<div class="col-sm-12">
+        <div class="well">
+            <form action="{{ url_for('topic_add') }}" method="post">
+            <table>
+                <tr>
+                    <td> <label for = "title"> Title : </label> </td>
+                    <td> <input type = "text" name = "title" /> </td>
+                </tr>
+                <tr>
+                    <td><label for = "content"> Content : </label> </td>
+                    <td> <textarea  name = "content" rows = "6" cols = "100"> </textarea> </td>
+                </tr>
+                <tr>
+                    <td>  </td>
+                    <td> <input class = "btn success" type = "submit" value = "Create"/> </td>
+                </tr>
+            </table>
+            </form>
+        </div>
+</div>
+</div>
+  </div>
+    </div>
+</body>
+</html>
