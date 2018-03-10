@@ -1,5 +1,4 @@
-import models
-import stores
+from app import models
 
 
 dummy_members = [
