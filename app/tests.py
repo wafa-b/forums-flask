@@ -1,5 +1,5 @@
-import models
-import stores
+from app import models
+from app import stores
 
 def create_members():
     member1 = models.Member("Ahmed",30)
