@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>Forums Workshop</title>
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>topic_update</title>
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
+
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -63,34 +62,39 @@
    </div>
 
 
-<div class="container">
-      <div class="col-sm-6 text-left">
-      <h1>Create New Topic</h1>
-    </div>
 
+      <div class="col-sm-6 text-left">
+      <h1>Edit Topic</h1>
+    </div>
+    <div class="col-sm-6 text-right">
+      <a href="{{url_for('topic_add')}}"><button class="btn default">New Topic +</button></a>
+    </div>
 <div class="col-sm-12">
         <div class="well">
-            <form action="{{ url_for('topic_add') }}" method="post">
+            <form action="{{ url_for('topic_update',id = post.id) }}" method="post">
             <table>
                 <tr>
                     <td> <label for = "title"> Title : </label> </td>
-                    <td> <input type = "text" name = "title" /> </td>
+                    <td> <input type = "text" name = "title" value = "{{post.title}}"/> </td>
                 </tr>
                 <tr>
                     <td><label for = "content"> Content : </label> </td>
-                    <td> <textarea  name = "content" rows = "6" cols = "50"> </textarea> </td>
+                    <td> <textarea  name = "content" rows = "6" cols = "50"> {{post.contente}} </textarea> </td>
                 </tr>
                 <tr>
                     <td>  </td>
-                    <td> <input class = "btn success" type = "submit" value = "Create"/> </td>
+                    <td> <input type = "submit" class = "btn success" type = "submit" value = "Save"/> </td>
                 </tr>
             </table>
             </form>
         </div>
 </div>
-</div>
-  </div>
     </div>
+
+  </div>
+</div>
+
+</div>
 
 <div class="container">
 
@@ -107,5 +111,6 @@
 
         </footer>
       </div>
+
 </body>
 </html>

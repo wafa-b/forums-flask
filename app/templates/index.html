@@ -85,10 +85,11 @@
 
     {% for post in posts %}
       <tr>
-        <td>{{post.title}}</td>
+
+          <td><a href = "{{ url_for('topic_show', id = post.id) }}">{{post.title}}</a></td>
         <td>
-          <a href="#"><button class="btn success">Edit</button></a>
-        <a href="#"><button class="btn danger">Delete</button></a></td>
+          <a href="{{ url_for('topic_update', id = post.id) }}"><button class="btn success">Edit</button></a>
+        <a href="{{url_for('topic_delete',id = post.id)}}"><button class="btn danger">Delete</button></a></td>
       </tr>
 
     {% endfor %}
