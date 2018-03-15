@@ -14,7 +14,7 @@ class BaseStore():
     def add(self,item_instance):
         item_instance.id = self._last_id
         self._data_provider.append(item_instance)
-        self.last_id += 1
+        self._last_id += 1
 
 
     def get_by_id(self,id):
