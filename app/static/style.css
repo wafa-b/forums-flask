@@ -43,6 +43,12 @@ tbody,td {
 background-color: white;
 border: none;
 }
+p{
+    text-align:center;
+    color: red;
+    padding: 10px;
+    font-size: 24px;
+}
 .success {background-color: #4CAF50; border: none;color: white;padding: 14px 28px;
     font-size: 16px;cursor: pointer;} /* Green */
 .success:hover {background-color: #46a049; border: none;color: white;padding: 14px 28px;
