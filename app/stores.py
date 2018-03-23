@@ -1,91 +1,72 @@
-import  itertools
+#import  itertools
+from app import models, db
+from sqlalchemy import desc, func
 
 class BaseStore():
+  def __init__(self, data_provider):
+        self.data_provider = data_provider
 
-    def __init__(self,data_provider,last_id):
-        self._data_provider = data_provider
-        self._last_id = last_id
+  def get_all(self):
+    return self.data_provider.query.all()
 
+  def add(self, item):
+        db.session.add(item)
+        db.session.commit()
+        return item
 
-    def get_all(self):
-        return self._data_provider
-
-
-    def add(self,item_instance):
-        item_instance.id = self._last_id
-        self._data_provider.append(item_instance)
-        self._last_id += 1
-
-
-    def get_by_id(self,id):
-        all_item_instance = self.get_all()
-        for item_instance in all_item_instance:
-            if item_instance.id == id:
-                return item_instance
+  def get_by_id(self, id):
+      return self.data_provider.query.get(id)
 
 
-    def update(self,instance):
-        result = instance
-        all_instance = self.get_all()
+  def delete(self, id):
+    result = self.data_provider.query.filter_by(id = id).delete()
+    db.session.commit()
+    return result
 
-        for index, current_instance in enumerate(all_instance):
-            if current_instance.id == instance.id:
-                all_instance[index] = instance
-                break
+  def update(self, item, fields):
+        result = self.data_provider.query.filter_by(id = item.id).update(fields)
+        db.session.commit()
+        return result
+
+  def entity_exists(self, item):
+        result = True
+
+        if self.get_by_id(item.id) is None:
+            result = False
 
         return result
 
-    def delete(self,id):
-      instance = self.get_by_id(id)
-      self._data_provider.remove(instance)
-
-    def entity_exists(self,item_instance):
-        if self.get_by_id(item_instance.id):
-            return True
-        return False
 
 class MemberStore(BaseStore):
 
-    members = []
-    last_id = 1
+
+  def __init__(self):
+        BaseStore.__init__(self,models.Member)
 
 
-    def __init__(self):
-        BaseStore.__init__(self,MemberStore.members,MemberStore.last_id)
+  def get_by_name(self, member_name):
+        return self.data_provider.query.filter_by(name = member_name)
 
 
-    def get_by_name(self, member_name):
-        all_members = self.get_all()
-        for member in all_members:
-            if member.name == member_name:
-                yield member
+  def update(self, entity):
+        fields = {"name": entity.name, "age": entity.age}
+        return BaseStore.update(entity,fields)
+        #return BaseStore.update(entity,fields)
 
-    def get_members_with_posts(self, all_posts):
-        all_members = self.get_all()
-        for member, post in itertools.product(all_members, all_posts):
-            if member.id is post.member_id:
-                member.posts.append(post)
-        for member in all_members:
-            yield member
+  def get_members_with_posts(self):
+        return self.data_provider.query.join(models.Member.posts)
 
-    def get_top_two(self, post_store):
-        all_members = self.get_members_with_posts(post_store)
-        all_members = sorted(all_members, key=lambda x: len(x.posts), reverse=True)
-        return all_members[:2]
+  def get_top_two(self):
+        return self.data_provider.query(func.count(models.Member.posts).label('total')).order_by('total DESC')
 
 
 class PostStore(BaseStore):
 
-    posts = []
-    last_id = 1
 
+  def __init__(self):
+        BaseStore.__init__(self,models.Post)
 
-    def __init__(self):
-        BaseStore.__init__(self,PostStore.posts,PostStore.last_id)
-
-
-
-    def get_posts_by_date(self):
-        all_posts = self.get_all()
-        posts_sorted_bydate = sorted(all_posts, key=lambda post: post.date)
-        return posts_sorted_bydate
+  def update(self, entity):
+        fields = {"title": entity.title, "content": entity.content}
+        return BaseStore.update(entity,fields)
+        #return BaseStore.update(entity,fields)
