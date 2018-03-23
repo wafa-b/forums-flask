@@ -1,8 +1,9 @@
-from app import models, stores, dummy_data
+from app import models
+from app import stores
 
 def create_members():
-    member1 = models.Member("Mohammed", 20)
-    member2 = models.Member("Mohammed", 22)
+    member1 = models.Member("Ahmed",30)
+    member2 = models.Member("Abdullah",20)
     member3 = models.Member("Abdo", 25)
     print(member1)
     print(member2)
@@ -12,17 +13,18 @@ def create_members():
     return member1, member2, member3
 
 
-def store_should_add_members(members_instances, member_store):
+def store_should_add_models(members_instances, member_store):
+
     for member in members_instances:
         member_store.add(member)
 
 
 def stores_should_be_similar():
+
     member_store1 = stores.MemberStore()
     member_store2 = stores.MemberStore()
     if member_store1.get_all() is member_store2.get_all():
         print("Same stores elements !")
-
 
 def print_members_list(members_list):
     for member in members_list:
@@ -32,23 +34,28 @@ def print_members_list(members_list):
 def print_all_members(member_store):
     print("=" * 30)
 
-    print_members_list(member_store.get_all())
+    for member in member_store.get_all():
+        print(member)
 
     print("=" * 30)
 
 
 def get_by_id_should_retrieve_same_object(member_store, member2):
-    member2_retrieved = member_store.get_by_id(2)
+    member2_retrieved = member_store.get_by_id(member2.id)
 
     if member2 is member2_retrieved:
         print("member2 and member2_retrieved are matching !")
 
 
 def update_should_modify_object(member_store, member3):
-    member3_copy = models.Member.query.get(3)
+    member3_copy = models.Member(member3.name, member3.age)
+    member3_copy.id = 3
+
+    if member3_copy is not member3:
+        print("member3 and member3_copy are not the same !")
 
     print(member3_copy)
-    member3_copy.name = "John"
+    member3_copy.name = "john"
     member_store.update(member3_copy)
     print(member_store.get_by_id(member3.id))
 
@@ -66,6 +73,7 @@ def catch_exception_when_deleting():
         member_store.delete(5)
     except ValueError:
         print("It should be an existence entity before deleting !")
+
 
 
 def create_posts(members_instances):
@@ -91,12 +99,12 @@ def create_posts(members_instances):
 
 
 def store_should_add_posts(posts_instances, post_store):
+
     for member in posts_instances:
         post_store.add(member)
 
-
-def store_should_get_members_with_posts(member_store):
-    members_with_posts = member_store.get_members_with_posts()
+def store_should_get_members_with_posts(member_store, post_store):
+    members_with_posts = member_store.get_members_with_posts(post_store.get_all())
 
     for member_with_posts in members_with_posts:
         print("{member_with_posts} has posts:")
@@ -106,8 +114,8 @@ def store_should_get_members_with_posts(member_store):
         print("=" * 10)
 
 
-def store_should_get_top_two(member_store):
-    top_two_members = member_store.get_top_two()
+def store_should_get_top_two(member_store, post_store):
+    top_two_members = member_store.get_top_two(post_store.get_all())
 
     for member_with_posts in top_two_members:
         print("{member_with_posts} has posts:")
@@ -115,16 +123,20 @@ def store_should_get_top_two(member_store):
             print("\t{post}")
 
 
-member_store = stores.MemberStore()
-post_store = stores.PostStore()
+def store_should_get_posts_by_date(post_store):
+    posts_stored_by_date = post_store.get_posts_by_date()
+    for post in posts_stored_by_date:
+        print(post)
 
-members_instances = dummy_data.dummy_members
+        print("=" * 10)
+
+
+members_instances = create_members()
 member1, member2, member3 = members_instances
 
-posts_instances = dummy_data.dummy_posts
-post1, post2, post3, post4, post5, post6, post7, post8, post9 = posts_instances
+member_store = stores.MemberStore()
 
-store_should_add_members(members_instances, member_store)
+store_should_add_models(members_instances, member_store)
 
 stores_should_be_similar()
 
@@ -140,8 +152,17 @@ print_all_members(member_store)
 
 store_should_get_members_by_name(member_store)
 
+
+
+posts_instances = create_posts(members_instances)
+post1, post2, post3, post4, post5, post6, post7, post8, post9 = posts_instances
+
+post_store = stores.PostStore()
+
 store_should_add_posts(posts_instances, post_store)
 
-store_should_get_members_with_posts(member_store)
+store_should_get_members_with_posts(member_store, post_store)
 
-#store_should_get_top_two(member_store)
+store_should_get_top_two(member_store, post_store)
+
+store_should_get_posts_by_date(post_store)
